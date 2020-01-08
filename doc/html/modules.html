@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Signethic module documentation &#8212; signethic 0.2 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to signethic’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="signethic-module-documentation">
+<h1>Signethic module documentation<a class="headerlink" href="#signethic-module-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-signethic">
+<span id="signethic"></span><h2><a class="reference internal" href="#module-signethic" title="signethic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signethic</span></code></a><a class="headerlink" href="#module-signethic" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="signethic.gen_key_pair">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">gen_key_pair</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">key_len=1024</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.gen_key_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a private and public key pair. These will be generated based on the path
+of the private key (the public key will use the same file name plus the extension .pub)</p>
+<p>Alternatively, this can be generated using a tool like openssl:</p>
+<blockquote>
+<div><p>openssl genpkey -out signing_key.pem 1024</p>
+<p>openssl rsa -in signing_key.pem -pubout &gt; signing_key.pem.pub</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – a string of the private key file name, with relative or full path</p></li>
+<li><p><strong>key_len</strong> – 1024 bits is default, other lengths can be used like 2048, 4096</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.get_private_key">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">get_private_key</code><span class="sig-paren">(</span><em class="sig-param">private_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.get_private_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads private key. If no path is specified, loads signing_key.pem from the
+current directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>private_key_path</strong> – a string of the private key file name, with relative or full path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the private key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.get_public_key">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">get_public_key</code><span class="sig-paren">(</span><em class="sig-param">public_key_path=None</em>, <em class="sig-param">private_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.get_public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads public key. If no path is specified, loads signing_key.pem.pub from the
+current directory. If a private key path is provided, the public key path is
+ignored and the public key is loaded from the private key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>public_key_path</strong> – a string of the public key file name, with relative or full path</p></li>
+<li><p><strong>private_key_path</strong> – a string of the private key file name, with relative or full path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.main">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#signethic.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>main entry point, called by command line script signethic.</p>
+<p>Calling signethic with a filename will generate a new file with the .signed extension
+that includes the signature and the file. It will be signed using the key <cite>signing_key.pem</cite>
+in the current directory, unless the SIGNING_KEY environment variable is set.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>signethic</p>
+<p>signethic filename</p>
+</div></blockquote>
+<p>To specify signing key, set environment variable, i.e.:</p>
+<blockquote>
+<div><p>export SIGNING_KEY=/path/to/key.pem</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.sign">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">sign</code><span class="sig-paren">(</span><em class="sig-param">thing</em>, <em class="sig-param">private_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a digital signature of “thing” using <cite>RSASSA-PKCS1-v1_5</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thing</strong> – binary data from any source, or a string</p></li>
+<li><p><strong>private_key_path</strong> – a string of the private key file name, with relative or full path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the PKCS1 v1.5 signature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.sign_and_persist">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">sign_and_persist</code><span class="sig-paren">(</span><em class="sig-param">thing</em>, <em class="sig-param">path</em>, <em class="sig-param">private_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.sign_and_persist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Commit to disk the signature generated by <cite>sign</cite> and the “thing”, in one file, specified by the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thing</strong> – binary data from any source, or a string</p></li>
+<li><p><strong>path</strong> – a string of the resulting file name, with relative or full path (ie. something.zip.signed)</p></li>
+<li><p><strong>private_key_path</strong> – a string of the private key file name, with relative or full path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the PKCS1 v1.5 signature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.verify">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">verify</code><span class="sig-paren">(</span><em class="sig-param">thing</em>, <em class="sig-param">signature</em>, <em class="sig-param">public_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify the signature corresponds to the “thing”, based on the public key provided. That public key
+has to match the private key that was used to sign. Returns 0 if verification failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thing</strong> – binary data from any source, or a string</p></li>
+<li><p><strong>signature</strong> – the PKCS1 v1.5 signature previously generated by sign, or loaded from signed file</p></li>
+<li><p><strong>public_key_path</strong> – a string of the public key file name, with relative or full path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>test for True / False on this return value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="signethic.verify_file">
+<code class="sig-prename descclassname">signethic.</code><code class="sig-name descname">verify_file</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">public_key_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#signethic.verify_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the signed file and verify the signature and the “thing” match, given a public key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – a string of the signed file name, with relative or full path (ie. something.zip.signed)</p></li>
+<li><p><strong>public_key_path</strong> – a string of the public key file name, with relative or full path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the “thing” in the signed file, or None if signature failed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">signethic</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Signethic module documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-signethic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signethic</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to signethic’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Dion Research LLC and Francois Dion.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
