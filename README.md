@@ -63,3 +63,7 @@ variable:
 
     export SIGNING_KEY=/path/to/key.pem
     
+# Requirements
+
+This version uses pycryptodome to provide the pycrypto package. If you prefer
+to use the original pycrypto, install version 0.2 (`pip install signethic==0.2`)
