@@ -1,5 +1,7 @@
 # Signethic
 
+![signethic logo](signethic.png "Signethic Logo")
+
 A Python module to easily and quickly cryptographically sign a "thing". The
 "thing" in question can be anything like a string, or any binary sequence. The
 binary sequence could be the output of a serializer, pickling, shelving, compiled
