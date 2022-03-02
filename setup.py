@@ -10,7 +10,7 @@ with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 with io.open(os.path.join(here, 'VERSION')) as f:
     version = f.read()
 
-requirements = ['pycryptodome==3.9.4']
+requirements = ['pycryptodome']
 
 setup(name='signethic',
       version=version,

@@ -1,0 +1,56 @@
+name: signethic dev steps w/Miniconda
+on:
+  push:
+  pull_request:
+
+jobs:
+  testenv:
+    name: Conda env with Python ${{ matrix.python-version }}, ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+        fail-fast: false
+        matrix:
+            os: ["ubuntu-latest"]
+            python-version: ["3.9", "3.8"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          activate-environment: signethic
+          python-version: ${{ matrix.python-version }}
+          auto-activate-base: false
+      - shell: bash -l {0}
+        run: |
+          conda info
+      - shell: bash -l {0}
+        run: |
+          conda install -c conda-forge pycryptodome -y -q
+          python -m pip install sphinx flake8 proselint pydocstyle .
+      - shell: bash -l {0}
+        run: conda list
+
+      - name: Lint
+        shell: bash -l {0}
+        run: |
+            flake8 --count --show-source --max-line-length=127 --statistics signethic/
+            flake8 --count --exit-zero --max-complexity=12 --max-line-length=127 --statistics signethic/
+      - name: Code Documentation check
+        shell: bash -l {0}
+        run: |
+          pydocstyle signethic/
+      - name: User Documentation check
+        shell: bash -l {0}
+        run: |
+          proselint README.md
+      - name: User doc build
+        shell: bash -l {0}
+        run: |
+          cd doc/sphinx
+          make html
+      - name: Push doc to Github Pages
+        if: matrix.python-version == '3.8'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: doc/sphinx/_build/html

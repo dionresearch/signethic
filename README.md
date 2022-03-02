@@ -45,7 +45,7 @@ is verified:
 ```python
 from signetic import verify_file
 
-public_key = ...
+public_key = …
 
 thing = verify_file("result.signed", public_key)
 ```
@@ -67,5 +67,11 @@ variable:
     
 # Requirements
 
-This version uses pycryptodome to provide the pycrypto package. If you prefer
-to use the original pycrypto, install version 0.2 (`pip install signethic==0.2`)
+This version uses pycryptodome to provide the pycrypto package. Version is unfrozen, so you can preinstall
+whichever version of pycryptodome you have validated, and signethic will use that. 
+
+For example, to use latest pycryptodome from conda-forge:
+
+`conda install -c conda-forge pycryptodome`
+
+If you prefer to use the original pycrypto, install version 0.2 (`pip install signethic==0.2`)
